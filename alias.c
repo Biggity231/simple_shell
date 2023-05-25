@@ -69,7 +69,7 @@ int replace_alias(info_t *info)
 			return (0);
 		p = _strdup(p + 1);
 		if (!p)
-			return (0)
+			return (0);
 		info->argv[0] = p;
 	}
 	return (1);
@@ -90,10 +90,10 @@ int print_alias(list_t *n)
 		for (a = n->str; a <= p; a++)
 			_putchar(*a);
 
-			_putchar('\'');
-			_puts(p + 1);
-			_puts("'\n");
-			return (0);
+		_putchar('\'');
+		_puts(p + 1);
+		_puts("'\n");
+		return (0);
 	}
 	return (1);
 }
@@ -119,7 +119,7 @@ int _myalias(info_t *info)
 		}
 		return (0);
 	}
-	for (i = 1; info->argv[i], i++)
+	for (i = 1; info->argv[i]; i++)
 	{
 		p = _strchr(info->argv[i], '=');
 		if (p)

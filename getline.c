@@ -18,7 +18,7 @@ ssize_t input_buf(info_t *info, char **buf, size_t *len)
 	{
 		free(*buf);
 		*buf = NULL;
-		signal(SIGINT, siginHandler);
+		signal(SIGINT, sigintHandler);
 	#if USE_GETLINE
 		r = getline(buf, &len_p, stdin);
 	#else
@@ -50,7 +50,7 @@ ssize_t input_buf(info_t *info, char **buf, size_t *len)
 ssize_t get_input(info_t *info)
 {
 	static char *buf;
-	static size i, j, len;
+	static size_t i, j, len;
 
 	ssize_t r = 0;
 	char **buf_p = &(info->arg), *p;
@@ -64,7 +64,7 @@ ssize_t get_input(info_t *info)
 		j = i;
 		p = buf + i;
 
-		check_chain(info, buf, &j, len);
+		check_chain(info, buf, &j, i, len);
 		while (j < len)
 		{
 			if (is_chain(info, buf, &j))
@@ -95,12 +95,12 @@ ssize_t get_input(info_t *info)
  */
 ssize_t read_buf(info_t *info, char *buf, size_t *i)
 {
-	size_t r = 0;
+	size_t  r = 0;
 
 	if (*i)
 		return (0);
 	r = read(info->readfd, buf, READ_BUF_SIZE);
-	if (r >= 0)
+	if (r > 0)
 		*i = r;
 	return (r);
 }
@@ -114,7 +114,7 @@ ssize_t read_buf(info_t *info, char *buf, size_t *i)
 
 int _getline(info_t *info, char **ptr, size_t *length)
 {
-	statuc char buf[READ_BUF_SIZE];
+	static char buf[READ_BUF_SIZE];
 	static size_t i, len;
 	size_t k;
 	ssize_t r = 0, s = 0;
