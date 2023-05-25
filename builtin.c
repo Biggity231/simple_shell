@@ -23,7 +23,7 @@ int _myexit(info_t *info)
 		info->err_num = _erratoi(info->argv[1]);
 		return (-2);/* indicates the given status numb the shell should executes */
 	}
-info->err_num = -1; /* setting error num to -1 n return -2 to indicates normal exit */
+info->err_num = -1;
 	return (-2);
 }
 /**
